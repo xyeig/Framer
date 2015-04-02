@@ -13,3 +13,23 @@ describe "ScrollComponent", ->
 
     copy = instance.copy()
     copy.scrollHorizontal.should.be.false
+
+  describe "wrap", ->
+
+    # Currently fails:
+    it.skip "should foward constructor options", (done) ->
+      options =
+        scrollVertical: false
+        name: "is a name"
+
+      scroller = new ScrollComponent options
+      scroller.scrollVertical.should.equal(options.scrollVertical)
+      scroller.name.should.equal(options.name)
+
+      layer = new Layer()
+
+      Framer.Loop.once "render", ->
+        scroller = ScrollComponent.wrap layer, options
+        scroller.scrollVertical.should.equal(options.scrollVertical)
+        scroller.name.should.equal(options.name)
+        done()
